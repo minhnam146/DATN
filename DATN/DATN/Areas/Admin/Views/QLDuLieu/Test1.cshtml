@@ -1,0 +1,261 @@
+﻿@model IEnumerable<DATN.Models.DanhSachDanhGia>
+
+@{
+    ViewBag.Title = "Test1";
+    Layout = "~/Areas/Admin/Views/Shared/layout-admin.cshtml";
+    var db = new DATN.Models.QLCNEntities();
+}
+
+<p>
+    @*@Html.ActionLink("Create New", "CreateDanhGia")*@
+    <a href="/Admin/QLDuLieu/CreateDanhGia/@ViewBag.id" >Create New</a>
+</p>
+
+<div>
+    <h2> Thông tin chung:</h2>
+</div>
+
+<div style="margin-bottom:10px" class="form-control">
+    <strong>Huyện:</strong>
+    <span>@ViewBag.tenHuyen</span>&nbsp
+    <strong style="margin-left:20px" >Năm Đánh Giá:</strong>
+    <span>@ViewBag.year</span>&nbsp
+    <strong style="margin-left:20px">Số hộ dân:</strong>
+    <span>@ViewBag.hoDan</span>&nbsp
+    <strong style="margin-left:20px">Số hộ nghèo:</strong>
+    <span>@ViewBag.hoNgheo</span>&nbsp
+</div>
+
+<div>
+    <h2> Dữ liệu đánh giá công trình:</h2>
+</div>
+<table class="table">
+    <tr>
+        <th> Công trình</th>
+        <th> Địa bàn cấp nước</th>
+        <th> Số hộ dân</th>
+        <th> Số hộ nghèo</th>
+        <th> Loại hình QL</th>
+        <th> Thu phí DV</th>
+        <th> Đạt QCVN</th>
+        <th> Khả năng cấp nước</th>
+        <th> Tỷ lệ đấu nối</th>
+        <th> Cán bộ quản lý</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.ct1.TenCT</td>
+            <td>@item.ct1.QLXa.TenXa</td>
+            <td>@item.dg1.HoDan</td>
+            <td>@item.dg1.HoNgheo</td>
+            <td>@item.dg1.LoaihinhQL</td>
+            <td>@item.dg1.ThuphiDV</td>
+            <td>@item.dg1.DatQCVN</td>
+            <td>@item.dg1.KhaNangCapNuoc</td>
+            <td>@item.dg1.TyLeDauNoi</td>
+            <td>@item.dg1.CanboQL</td>
+            <td>
+                    @Html.ActionLink("Edit", "EditDanhGia", new { id = item.dg1.danhgiaID }) |
+                    @Html.ActionLink("Delete", "DeleteDanhGia", new { id = item.dg1.danhgiaID }, new {onclick = "return confirm('Xác nhận xóa?');"})
+             </td>
+        </tr>
+    }
+</table>
+<tr>
+    <td colspan="5">
+        @{
+            int PrePage = ViewBag.Page - 1;
+            if (PrePage <= 0)
+            {
+                PrePage = 1;
+            }
+            int NextPage = ViewBag.Page + 1;
+            if (NextPage > ViewBag.Trang)
+            {
+                NextPage = ViewBag.Trang;
+            }
+        }
+        <ul style="margin-top:30px;justify-content:center" class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="Test1?dataID=@ViewBag.id&&page=@PrePage">
+                    Pre
+                </a>
+            </li>
+            @for (int i = 0; i < ViewBag.Trang; i++)
+            {
+                if (i + 1 == ViewBag.Page)
+                {
+                    <li class="page-item active">
+                        <a class="page-link" href="Test1?dataID=@ViewBag.id&&page=@(i+1)">
+                            @(i + 1)
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="Test1?dataID=@ViewBag.id&&page=@(i+1)">
+                            @(i + 1)
+                        </a>
+                    </li>
+                }
+            }
+            <li class="page-item">
+                <a class="page-link" href="Test1?dataID=@ViewBag.id&&page=@NextPage">
+                    Next
+                </a>
+            </li>
+        </ul>
+    </td>
+</tr>
+@*<div class="form-group">
+        @Html.LabelFor(model => model.dthID, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select class="form-control" id="dthID">
+                @foreach (var item in db.DanhGias.ToList())
+                {
+                    <option value="@item.dthID">@item.dthID</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <table class="table" id="Test">
+        <thead>
+            <tr>
+                <th> STT</th>
+                <th> Công trình</th>
+                <th> Địa bàn cấp nước</th>
+                <th> Số hộ dân</th>
+                <th> Số hộ nghèo</th>
+                <th> Loại hình QL</th>
+                <th> Thu phí DV</th>
+                <th> Đạt QCVN</th>
+                <th> Khả năng cấp nước</th>
+                <th> Tỷ lệ đấu nối</th>
+                <th> Cán bộ quản lý</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $("#dthID").change(function () {
+                console.log($("#dthID").val());
+                $.get("/Admin/QLDuLieu/GetDanhSachCT", {huyenID: $("#IDHuyen").val(), dataID: $("#dthID").val() }, function (data) {
+                    $("#Test tbody").empty();
+                    $.each(data, function (index, item) {
+                        var rows = "<tr>"
+                            + "<td>" + (++index) + "</td>"
+                            + "<td>" + item.TenCT + "</td>"
+                            + "<td>" + item.TenXa + "</td>"
+                            + "<td>" + item.HoDan + "</td>"
+                            + "<td>" + item.HoNgheo + "</td>"
+                            + "<td>" + item.LoaihinhQL + "</td>"
+                            + "<td>" + item.ThuphiDV + "</td>"
+                            + "<td>" + item.DatQCVN + "</td>"
+                            + "<td>" + item.KhaNangCapNuoc + "</td>"
+                            + "<td>" + item.TyLeDauNoi + "</td>"
+                            + "<td>" + item.CanboQL + "</td>"
+                            + "<td>" + `<button onClick=Edit(${item.dthID})>Edit</button>` + "</td>"
+                            + "</tr>";
+                        $('#Test tbody').append(rows);
+                    });
+                });
+            });
+        })
+    </script>*@
+@*<script>
+        function Edit(dthID) {
+            var url = '@Url.Action("EditDuLieu", new {  id = "XXXX" })';
+            console.log(url);
+            url = url.replace('XXXX', dthID);
+            window.location.href = url;
+        }
+        $(document).ready(function () {
+            $("#IDTinh").change(function () {
+                $.get("/Admin/QLCongTrinh/GetHuyen", { tinhID: $("#IDTinh").val() }, function (dataHuyen) {
+                    $("#IDHuyen").empty();
+                    $("#Test tbody").empty();
+                    $.each(dataHuyen, function (index, row) {
+                        $("#IDHuyen").append("<option value='" + row.ID + "'>" + row.TenHuyen + "</option>")
+                    });
+                    $.get("/Admin/QLDuLieu/GetYear", { huyenID: $("#IDHuyen").val() }, function (dataYear) {
+                        $("#NamDanhGia").empty();
+                        $("#Test tbody").empty();
+                        $.each(dataYear, function (index, row) {
+                            $("#NamDanhGia").append("<option value='" + row.NamDanhGia + "'>" + row.NamDanhGia + "</option>")
+                        });
+                        $.get("/Admin/QLDuLieu/GetDLHuyenTheoNam", { huyenID: dataHuyen[0].ID, year: dataYear[0].NamDanhGia }, function (data) {
+                        $("#Test tbody").empty();
+                        $.each(data, function (index, item) {
+                            var rows = "<tr>"
+                                + "<td>" + (++index) + "</td>"
+                                + "<td>" + item.TenTinh + "</td>"
+                                + "<td>" + item.TenHuyen + "</td>"
+                                + "<td>" + item.NamDanhGia + "</td>"
+                                + "<td>" + item.SoHoDan + "</td>"
+                                + "<td>" + item.SoHoNgheo + "</td>"
+                                + "<td>" + `<button onClick=Edit(${item.dthID})>Edit</button>` + "</td>"
+                                + "</tr>";
+                            $('#Test tbody').append(rows);
+                        });
+                    });
+
+                });
+                });
+            })
+        });
+         $(document).ready(function () {
+             $("#IDHuyen").change(function () {
+                 $.get("/Admin/QLDuLieu/GetYear", { huyenID: $("#IDHuyen").val() }, function (dataYear) {
+                     $("#NamDanhGia").empty();
+                     $("#Test tbody").empty();
+                     $.each(dataYear, function (index, row) {
+                         $("#NamDanhGia").append("<option value='" + row.NamDanhGia + "'>" + row.NamDanhGia + "</option>")
+                        });
+                     $.get("/Admin/QLDuLieu/GetDLHuyenTheoNam", { huyenID: $("#IDHuyen").val(), year: dataYear[0].NamDanhGia }, function (data) {
+                         $("#Test tbody").empty();
+                        $.each(data, function (index, item) {
+                            var rows = "<tr>"
+                                + "<td>" + (++index) + "</td>"
+                                + "<td>" + item.TenTinh + "</td>"
+                                + "<td>" + item.TenHuyen + "</td>"
+                                + "<td>" + item.NamDanhGia + "</td>"
+                                + "<td>" + item.SoHoDan + "</td>"
+                                + "<td>" + item.SoHoNgheo + "</td>"
+                                + "<td>" + `<button onClick=Edit(${item.dthID})>Edit</button>` + "</td>"
+                                + "</tr>";
+                            $('#Test tbody').append(rows);
+                        });
+                });
+                    });
+
+                });
+         })
+        $(document).ready(function () {
+             $("#NamDanhGia").change(function () {
+                $.get("/Admin/QLDuLieu/GetDLHuyenTheoNam", {huyenID: $("#IDHuyen").val(), year: $("#NamDanhGia").val()}, function (data) {
+                        $("#Test tbody").empty();
+                        $.each(data, function (index, item) {
+                            var rows = "<tr>"
+                                + "<td>" + (++index) + "</td>"
+                                + "<td>" + item.TenTinh + "</td>"
+                                + "<td>" + item.TenHuyen + "</td>"
+                                + "<td>" + item.NamDanhGia + "</td>"
+                                + "<td>" + item.SoHoDan + "</td>"
+                                + "<td>" + item.SoHoNgheo + "</td>"
+                                + "<td>" + `<button onClick=Edit(${item.dthID})>Edit</button>` + "</td>"
+                                + "</tr>";
+                            $('#Test tbody').append(rows);
+                        });
+                });
+                });
+            })
+    </script>*@

@@ -1,0 +1,90 @@
+﻿@model DATN.Models.QLCongTrinh
+
+@{
+    ViewBag.Title = "ChiTietCongTrinh";
+    Layout = "~/Areas/Admin/Views/Shared/layout-admin.cshtml";
+}
+
+<h2>Chi tiết Công Trình</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt> Công trình:</dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenCT)
+        </dd>
+
+        <dt> Năm xây dựng:</dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NamXayDung)
+        </dd>
+
+        <dt> Năm đưa vào sử dụng:</dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NamDuaVaoSD)
+        </dd>
+
+        <dt> Loại hình:</dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoaiHinh)
+        </dd>
+
+        <dt> Công suất thiết kế (Hộ Dân):</dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CSHDTK)
+        </dd>
+
+        @*<dt> Công suất theo hộ dân (TT):</dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CSHDTT)
+        </dd>
+
+        <dt> Số Hộ Nghèo:</dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HoNgheo)
+        </dd>*@
+
+        <dt> Loại hình quản lý:</dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoaihinhQL)
+        </dd>
+
+        <dt> Loại công trình:</dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoaiCongTrinh.tenloaiCT)
+        </dd>
+
+        <dt> Tỉnh:</dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QLTinh.TenTinh)
+        </dd>
+
+        <dt> Huyện:</dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QLHuyen.TenHuyen)
+        </dd>
+
+        <dt> Xã:</dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QLXa.TenXa)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "EditCongTrinh", new { id = Model.IDCT, tinhID = Model.IDTinh, huyenID = Model.IDHuyen }) |
+    @Html.ActionLink("Back to List", "DanhSachCongTrinh")
+</p>

@@ -1,0 +1,46 @@
+﻿@model DATN.Models.QLXa
+@{
+    ViewBag.Title = "GetXatheoTinh";
+    Layout = "~/Areas/Admin/Views/Shared/layout-admin.cshtml";
+}
+
+<h2>Thêm Xã</h2>
+
+<div class=" container">
+    <div class="form-group">
+        @if (ViewBag.dsTinh != null)
+        {
+            @Html.DropDownListFor(model => model.IDTinh, ViewBag.dsTinh as SelectList, "-- Chọn Tỉnh --", new { @class = "form-control" })
+        }
+    </div>
+    <div class="form-group">
+        @Html.DropDownListFor(model => model.IDHuyen, new SelectList(" "), "-- Chọn Huyện --", new { @class = "form-control" })
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+$(document).ready(function () {
+        $("#IDTinh").change(function () {
+            $.get("/Admin/QLDiaBanCN/GetHuyen", { tinhID: $("#IDTinh").val() }, function (data) {
+                $("#IDHuyen").empty();
+                $.each(data, function (index, row) {
+                    $("#IDHuyen").append("<option value='" + row.ID + "'>" + row.TenHuyen + "</option>")
+                });
+            });
+        })
+    });
+        $("#IDTinh").change(function () {
+            var tinhID = $(this).val();
+            debugger
+            $.ajax({
+                type: "post",
+                url: "/Admin/QLCongTrinh/GetHuyen1?IDTinh=" + tinhID,
+                contentType: "html",
+                success: function (response) {
+                    debugger
+                    $("#IDHuyen").empty();
+                    $("#IDHuyen").append(response);
+                }
+            })
+        })
+</script>

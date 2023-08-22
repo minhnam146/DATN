@@ -1,0 +1,153 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/layout-admin.cshtml";
+}
+<!DOCTYPE html>
+<style>
+    /* The container <div> - needed to position the dropdown content */
+    .dropdown {
+        display: inline-block;
+    }
+
+    /* Dropdown Content (Hidden by Default) */
+    .dropdown-content {
+        display: none;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        border-radius: 8px;
+    }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+            /* Change color of dropdown links on hover */
+            .dropdown-content a:hover {
+                background-color: #ddd;
+                border-radius: 8px;
+            }
+
+    /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+    .show {
+        display: block;
+    }
+
+    p:hover {
+        color: #6666FF;
+    }
+</style>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <h2 style="text-align: left; font-size: 70px; color: #33CCFF"> Tiết kiệm nước<i style="font-size:100px;color:#33CCFF; margin-left:10px" class="bi bi-droplet"></i></h2>
+    <div style="display:flex; flex-direction:column;justify-content:center;align-items:center">
+        <div style="display: flex">
+            @*<div style="color:black;">
+                    <div style="width:450px;height:250px;border:2px solid #DFE3E6;background-color:white;margin:20px;border-radius:8px">
+                        <div style="display: flex;margin:20px; flex-direction: column; justify-content: center; align-items: center">
+                            <i style="font-size:100px;color:#6666FF" class="bi bi-geo-alt"></i>
+                            <strong style="font-size:18px;margin-bottom:20px; margin-top:-10px">Quản lý địa bàn cấp nước</strong>
+                            <div style="display:flex; margin-top:-30px;">
+                                <a href="~/Admin/QLDiaBanCN/DanhSachTinh" style="margin: 20px; color: black">
+                                    <p style="font-size:20px;font-weight:bold">Tỉnh</p>
+                                </a>
+                                <a href="~/Admin/QLDiaBanCN/DanhSachHuyen" style="margin: 20px; color: black">
+                                    <p style="font-size:20px;font-weight:bold">Huyện</p>
+                                </a>
+                                <a href="~/Admin/QLDiaBanCN/DanhSachXa" style="margin: 20px; color: black">
+                                    <p style="font-size:20px;font-weight:bold">Xã</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+            <div class="dropdown" >
+                <a onclick="myFunction()" style="position: relative;color:black; cursor:pointer;" id="dropbtn">
+                    <div style="width:450px;height:250px;border:2px solid #DFE3E6;background-color:white;margin:20px;border-radius:8px">
+                        <div style="display: flex;margin:20px; flex-direction: column; justify-content: center; align-items: center">
+                            <i style="font-size:100px;color:#6666FF" class="bi bi-geo-alt"></i>
+                            <p style="font-size:20px;font-weight:bold">Quản lý địa bàn cấp nước</p>
+                        </div>
+                    </div>
+                </a>
+                <div style="position: absolute; top: 50%; left: 50%;" id="myDropdown" class="dropdown-content">
+                    <a href="~/Admin/QLDiaBanCN/DanhSachTinh">Quản lý Tỉnh</a>
+                    <a href="~/Admin/QLDiaBanCN/DanhSachHuyen">Quản lý Huyện</a>
+                    <a href="~/Admin/QLDiaBanCN/DanhSachXa">Quản lý Xã</a>
+                </div>
+            </div>
+            <a href="~/Admin/QLCongTrinh/DanhSachCongTrinh" style="color:black; cursor:pointer;">
+                <div style="width:450px;height:250px;border:2px solid #DFE3E6;background-color:white;margin:20px;border-radius:8px">
+                    <div style="display: flex;margin:20px; flex-direction: column; justify-content: center; align-items: center">
+                        <i style="font-size:100px;color:#6666FF" class="bi bi-building"></i>
+                        <p style="font-size:20px;font-weight:bold">Quản lý công trình cấp nước</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div style="display:flex">
+            <a href="~/Admin/QLDuLieu/Test" style="color:black; cursor:pointer;">
+                <div style="width:450px;height:250px;border:2px solid #DFE3E6;background-color:white;margin:20px;border-radius:8px">
+                    <div style="display: flex;margin:20px; flex-direction: column; justify-content: center; align-items: center">
+                        <i style="font-size: 100px; color: #6666FF" class="bi bi-folder"></i>
+                        <p style="font-size:20px;font-weight:bold">Quản lý dữ liệu quận/huyện</p>
+                    </div>
+                </div>
+            </a>
+            <a href="~/Admin/ShowChart/Thongke2" style="color:black; cursor:pointer;">
+                <div style="width:450px;height:250px;border:2px solid #DFE3E6;background-color:white;margin:20px;border-radius:8px">
+                    <div style="display: flex;margin:20px; flex-direction: column; justify-content: center; align-items: center">
+                        <i style="font-size: 100px; color: #6666FF" class="bi bi-bar-chart"></i>
+                        <p style="font-size:20px;font-weight:bold">Thống kê</p>
+                    </div>
+                </div>
+            </a>
+            @*<div class="dropdown" >
+                <a onclick="myFunction2()" style="position: relative;color:black; cursor:pointer;" id="dropbtn2">
+                    <div style="width:450px;height:250px;border:2px solid #DFE3E6;background-color:white;margin:20px;border-radius:8px">
+                        <div style="display: flex;margin:20px; flex-direction: column; justify-content: center; align-items: center">
+                            <i style="font-size:100px;color:#6666FF" class="bi bi-bar-chart"></i>
+                            <p style="font-size:20px;font-weight:bold">Thống kê</p>
+                        </div>
+                    </div>
+                </a>
+                <div style="position: absolute; top: 50%; left: 50%;" id="myDropdown2" class="dropdown-content">
+                    <a href="~/Admin/ShowChart/Thongke">Thống kê 1</a>
+                    <a href="~/Admin/ShowChart/Thongke2">Thống kê 2</a>
+                </div>
+            </div>*@
+        </div>
+    </div>
+    <h2 style="text-align:right;font-size:70px; margin-top:20px; color:#00CC33"><i style="font-size:100px;color:#00CC33; margin-left:10px" class="bi bi-globe2"></i> Bảo vệ trái đất xanh</h2>
+</body>
+</html>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    /* When the user clicks on the button,
+    toggle between hiding and showing the dropdown content */
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function (event) {
+        if (!event.target.matches('#dropbtn')) {
+            var dropdowns = document.getElementById("myDropdown");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>

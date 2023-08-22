@@ -1,0 +1,157 @@
+﻿@model IEnumerable<DATN.Models.QLCongTrinh>
+@using DATN.Models;
+@{
+    ViewBag.Title = "DanhSachCongTrinh";
+    Layout = "~/Areas/Admin/Views/Shared/layout-admin.cshtml";
+    QLCNEntities db = new QLCNEntities();
+    List<LoaiCongTrinh> listloaiCT = db.LoaiCongTrinhs.ToList();
+    List<QLTinh> listTinh = db.QLTinhs.ToList();
+}
+
+<h2>Danh Sách Công Trình</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateCongTrinh")
+</p>
+
+
+<div class="search-bar">
+    <form class="search-form d-flex align-items-center" method="get" action="#">
+        <strong> Công trình:</strong>
+        <input style="margin-bottom:10px; margin-left:10px" type="text" name="keySearch" placeholder="Search" >
+        @*<strong style="margin-left:10px"> Tỉnh:</strong>
+        <select style="margin-bottom:10px; margin-left:10px" id="IDTinh" name="IDTinh">
+            <option value="null">Tất cả</option>
+            @foreach (var tinh in listTinh)
+            {
+                <option value="@tinh.ID">@tinh.TenTinh</option>
+            }
+        </select>
+        <strong style="margin-left:10px"> Huyện:</strong>
+        <select style="margin-bottom:10px; margin-left:10px" id="IDHuyen" name="IDHuyen">
+            <option value="null">Tất cả</option>
+            <option value=""></option>
+        </select>*@
+        <strong style="margin-left:10px"> Loại công trình:</strong>
+        <select style="margin-bottom:10px; margin-left:10px" name="idloaiCT">
+            <option value="null">Tất cả</option>
+            @foreach (var loai in listloaiCT)
+            {
+                <option value="@loai.loaiCTID" @Html.Raw(loai.loaiCTID == ViewBag.idloaiCT ? "selected" : "")>@loai.tenloaiCT</option>
+            }
+        </select>
+        <button style="margin-bottom:10px; margin-left:10px" type="submit" title="Search"><i class="bi bi-search"></i></button>
+    </form>
+</div>
+@*<div>
+        <form method="get">
+            <div>
+                <p> Loại công trình:</p>
+                <select name="idloaiCT">
+                    @foreach (var loai in listloaiCT)
+                    {
+                        <option value="@loai.loaiCTID" @Html.Raw(loai.loaiCTID == ViewBag.idloaiCT ? "selected" : "")>@loai.tenloaiCT</option>
+                    }
+                </select>
+                <button type="submit">Tìm</button>
+            </div>
+        </form>
+    </div>*@
+
+<table style="margin-top:20px" class="table">
+    <tr>
+        <th>Công Trình</th>
+        <th>Loại hình</th>
+        <th>Tỉnh</th>
+        <th>Huyện</th>
+        <th>Xã</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenCT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoaiHinh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QLTinh.TenTinh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QLHuyen.TenHuyen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QLXa.TenXa)
+            </td>
+            <td>
+                @Html.ActionLink("View", "ChiTietCongTrinh", new { id = item.IDCT }) |
+                @Html.ActionLink("Edit", "EditCongTrinh", new { id = item.IDCT, tinhID = item.IDTinh, huyenID = item.IDHuyen }) |
+                @Html.ActionLink("Delete", "DeleteCongTrinh", new { id = item.IDCT }, new {onclick = "return confirm('Xác nhận xóa?');"})
+            </td>
+        </tr>
+    }
+</table>
+<tr>
+    <td colspan="5">
+        @{
+            int PrePage = ViewBag.Page - 1;
+            if (PrePage <= 0)
+            {
+                PrePage = 1;
+            }
+            int NextPage = ViewBag.Page + 1;
+            if (NextPage > ViewBag.Trang)
+            {
+                NextPage = ViewBag.Trang;
+            }
+        }
+        <ul style="margin-top:30px;justify-content:center" class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="DanhSachCongTrinh?idloaiCT=@ViewBag.idloaiCT&&keySearch=@ViewBag.keySearch&&page=@PrePage">
+                    Pre
+                </a>
+            </li>
+            @for (int i = 0; i < ViewBag.Trang; i++)
+            {
+                if (i + 1 == ViewBag.Page)
+                {
+                    <li class="page-item active">
+                        <a class="page-link" href="DanhSachCongTrinh?idloaiCT=@ViewBag.idloaiCT&&keySearch=@ViewBag.keySearch&&page=@(i+1)">
+                            @(i + 1)
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="DanhSachCongTrinh?idloaiCT=@ViewBag.idloaiCT&&keySearch=@ViewBag.keySearch&&page=@(i+1)">
+                            @(i + 1)
+                        </a>
+                    </li>
+                }
+            }
+            <li class="page-item">
+                <a class="page-link" href="DanhSachCongTrinh?idloaiCT=@ViewBag.idloaiCT&&keySearch=@ViewBag.keySearch&&page=@NextPage">
+                    Next
+                </a>
+            </li>
+        </ul>
+    </td>
+</tr>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+$(document).ready(function () {
+        $("#IDTinh").change(function () {
+            $.get("/Admin/QLDiaBanCN/GetXaTheoHuyen", { tinhID: $("#IDTinh").val() }, function (data) {
+                $("#IDHuyen").empty();
+                $("#IDHuyen").append("<option value='null'>" + "Tất cả" + "</option>")
+                $.each(data, function (index, row) {
+                    $("#IDHuyen").append("<option value='" + row.ID + "'>" + row.TenHuyen + "</option>")
+                });
+            });
+        })
+    });
+</script>

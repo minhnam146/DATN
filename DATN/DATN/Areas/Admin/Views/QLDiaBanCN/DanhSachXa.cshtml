@@ -1,0 +1,152 @@
+﻿@model IEnumerable<DATN.Models.QLXa>
+
+@{
+    ViewBag.Title = "DanhSachXa";
+    Layout = "~/Areas/Admin/Views/Shared/layout-admin.cshtml";
+}
+
+<h2>Danh Sách Xã</h2>
+
+<div class="search-bar">
+    <form class="search-form d-flex align-items-center" method="get">
+        <input type="text" name="keySearch" placeholder="Search">
+        <button style="margin-left:10px" type="submit" title="Search"><i class="bi bi-search"></i></button>
+    </form>
+</div>
+
+<p style="margin-top:10px">
+    @Html.ActionLink("Create New", "CreateXa")
+</p>
+
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Tên Tỉnh</th>
+        <th>Tên Huyện</th>
+        <th>Tên Xã</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QLTinh.TenTinh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QLHuyen.TenHuyen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenXa)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditXa", new { id = item.ID, tinhId = item.IDTinh }) |
+                @Html.ActionLink("Delete", "DeleteXa", new { id = item.ID }, new {onclick = "return confirm('Xác nhận xóa?');"})
+            </td>
+        </tr>
+    }
+<tr>
+    <td colspan="5">
+        @{
+            int PrePage = ViewBag.Page - 1;
+            if (PrePage <= 0)
+            {
+                PrePage = 1;
+            }
+            int NextPage = ViewBag.Page + 1;
+            if (NextPage > ViewBag.Trang)
+            {
+                NextPage = ViewBag.Trang;
+            }
+        }
+        <ul style="margin-top:20px;justify-content:center" class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="DanhSachXa?keySearch=@ViewBag.keySearch&&page=@PrePage">
+                    Pre
+                </a>
+            </li>
+            @for (int i = 0; i < ViewBag.Trang; i++)
+            {
+                if (i + 1 == ViewBag.Page)
+                {
+                    <li class="page-item active">
+                        <a class="page-link" href="DanhSachXa?keySearch=@ViewBag.keySearch&&page=@(i+1)">
+                            @(i + 1)
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="DanhSachXa?keySearch=@ViewBag.keySearch&&page=@(i+1)">
+                            @(i + 1)
+                        </a>
+                    </li>
+                }
+            }
+            <li class="page-item">
+                <a class="page-link" href="DanhSachXa?keySearch=@ViewBag.keySearch&&page=@NextPage">
+                    Next
+                </a>
+            </li>
+        </ul>
+    </td>
+</tr>
+</table>
+@*@model IEnumerable<DATN.Models.QLXa1>
+
+    @{
+        ViewBag.Title = "DanhSachXa";
+        Layout = "~/Areas/Admin/Views/Shared/layout-admin.cshtml";
+
+        var db = new DATN.Models.QLCNEntities();
+        var dsXa = (from tinh in db.QLTinhs
+                    join huyen1 in db.QLHuyens
+                    on tinh.ID equals huyen1.IDTinh
+                    join xa in db.QLXas
+                    on huyen1.ID equals xa.IDHuyen
+                    select new
+                    {
+                        xa.ID,
+                        tinh.TenTinh,
+                        huyen1.TenHuyen,
+                        xa.TenXa
+                    }).ToList();
+
+    }
+
+    <h2>Danh Sách Xã</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "CreateXa")
+    </p>
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Tên Tỉnh</th>
+            <th>Tên Huyện</th>
+            <th>Tên Xã</th>
+            <th></th>
+        </tr>
+
+     @foreach(var item in Model)
+    {
+        <tr>
+            <td>@item.ID</td>
+            <td>@item.TenTinh</td>
+            <td>@item.TenHuyen</td>
+            <td>@item.TenXa</td>
+            <td>@item.xadetails.ID</td>
+            <td>@item.tinhdetails.TenTinh</td>
+            <td>@item.huyendetails.TenHuyen</td>
+            <td>@item.xadetails.TenXa</td>
+            <td>
+                @Html.ActionLink("Edit", "EditXa", new { id = item.xadetails.ID }) |
+                @Html.ActionLink("Delete", "DeleteXa", new { id = item.xadetails.ID })
+            </td>
+        </tr>
+    }
+    </table>*@

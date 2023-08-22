@@ -1,0 +1,160 @@
+﻿@model DATN.Models.QLCongTrinh
+
+@{
+    ViewBag.Title = "EditCongTrinh";
+    Layout = "~/Areas/Admin/Views/Shared/layout-admin.cshtml";
+}
+
+<h2>Edit Công Trình</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IDCT)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TenCT, "Công trình:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TenCT, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TenCT, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+         <div class="form-group">
+            @Html.LabelFor(model => model.NamXayDung, "Năm xây dựng:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NamXayDung, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NamXayDung, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+         <div class="form-group">
+            @Html.LabelFor(model => model.NamDuaVaoSD, "Năm đưa vào sử dụng:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NamDuaVaoSD, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NamDuaVaoSD, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LoaiCT, "Loại công trình:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @if (ViewBag.dsloaiCT != null)
+                {
+                    @Html.DropDownListFor(model => model.LoaiCT, ViewBag.dsloaiCT as SelectList, new { @class = "form-control" })
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IDTinh, "Tỉnh:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @if (ViewBag.dsTinh != null)
+                {
+                    @Html.DropDownListFor(model => model.IDTinh, ViewBag.dsTinh as SelectList, new { @class = "form-control" })
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IDHuyen, "Huyện:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @if (ViewBag.dsHuyen != null)
+                {
+                    @Html.DropDownListFor(model => model.IDHuyen, ViewBag.dsHuyen as SelectList, new { @class = "form-control" })
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IDXa, "Xã:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @if (ViewBag.dsXa != null)
+                {
+                    @Html.DropDownListFor(model => model.IDXa, ViewBag.dsXa as SelectList, new { @class = "form-control" })
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LoaiHinh, "Loại hình:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.LoaiHinh, ViewBag.dsloaiHinh as SelectList, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CSHDTK, "Công suất thiết kế (Hộ Dân):", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CSHDTK, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CSHDTK, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.CSHDTT, "Công suất theo hộ dân (TT):", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CSHDTT, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CSHDTT, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HoNgheo, "Số Hộ Nghèo:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.HoNgheo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.HoNgheo, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LoaihinhQL, "Loại hình quản lý:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.LoaihinhQL, ViewBag.dsloaihinhQL as SelectList, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "DanhSachCongTrinh")
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#IDTinh").change(function () {
+            $.get("/Admin/QLCongTrinh/GetHuyen", { tinhID: $("#IDTinh").val() }, function (dataHuyen) {
+                $("#IDHuyen").empty();
+                $.each(dataHuyen, function (index, row) {
+                    $("#IDHuyen").append("<option value='" + row.ID + "'>" + row.TenHuyen + "</option>")
+                });
+                $.get("/Admin/QLCongTrinh/GetXa", { huyenID: dataHuyen[0].ID }, function (data) {
+                    $("#IDXa").empty();
+                    $.each(data, function (index, row) {
+                        $("#IDXa").append("<option value='" + row.ID + "'>" + row.TenXa + "</option>")
+                    });
+            });
+            });
+        })
+
+        $("#IDHuyen").change(function () {
+            $.get("/Admin/QLCongTrinh/GetXa", { huyenID: $("#IDHuyen").val() }, function (data) {
+
+                $("#IDXa").empty();
+                $.each(data, function (index, row) {
+                    $("#IDXa").append("<option value='" + row.ID + "'>" + row.TenXa + "</option>")
+                });
+            });
+        })
+    });
+</script>

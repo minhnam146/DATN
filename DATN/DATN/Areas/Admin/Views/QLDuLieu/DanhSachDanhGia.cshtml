@@ -1,0 +1,68 @@
+﻿@model IEnumerable<DATN.Models.DanhGia>
+
+@{
+    ViewBag.Title = "DanhSachDanhGia";
+    Layout = "~/Areas/Admin/Views/Shared/layout-admin.cshtml";
+}
+
+<h2>Danh Sách Đánh Giá</h2>
+
+<table class="table">
+    <tr>
+        <th> Huyện</th>
+        <th> Năm Đánh Giá</th>
+        <th> Công trình</th>
+        <th> Địa bàn cấp nước</th>
+        <th> Số hộ dân</th>
+        <th> Số hộ nghèo</th>
+        <th> Loại hình QL</th>
+        <th> Thu phí DV</th>
+        <th> Đạt QCVN</th>
+        <th> Khả năng cấp nước</th>
+        <th> Tỷ lệ đấu nối</th>
+        <th> Cán bộ quản lý</th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataHuyen.QLHuyen.TenHuyen)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataHuyen.NamDanhGia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QLCongTrinh.TenCT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QLCongTrinh.QLXa.TenXa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HoDan)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HoNgheo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LoaihinhQL)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ThuphiDV)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DatQCVN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KhaNangCapNuoc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TyLeDauNoi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CanboQL)
+        </td>       
+    </tr>
+}
+
+</table>

@@ -1,0 +1,718 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="QLCNModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="idAcc" />
+          </Key>
+          <Property Name="idAcc" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="TenNguoiDung" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="DanhGia">
+          <Key>
+            <PropertyRef Name="danhgiaID" />
+          </Key>
+          <Property Name="danhgiaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dthID" Type="int" />
+          <Property Name="IDCT" Type="int" />
+          <Property Name="HoDan" Type="int" />
+          <Property Name="HoNgheo" Type="int" />
+          <Property Name="LoaihinhQL" Type="nvarchar" MaxLength="50" />
+          <Property Name="ThuphiDV" Type="bit" Nullable="false" />
+          <Property Name="DatQCVN" Type="bit" Nullable="false" />
+          <Property Name="KhaNangCapNuoc" Type="bit" Nullable="false" />
+          <Property Name="TyLeDauNoi" Type="bit" Nullable="false" />
+          <Property Name="CanboQL" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DataHuyen">
+          <Key>
+            <PropertyRef Name="dthID" />
+          </Key>
+          <Property Name="dthID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDHuyen" Type="int" />
+          <Property Name="NamDanhGia" Type="int" />
+          <Property Name="SoHoDan" Type="int" />
+          <Property Name="SoHoNgheo" Type="int" />
+          <Property Name="IDTinh" Type="int" />
+        </EntityType>
+        <EntityType Name="LoaiCongTrinh">
+          <Key>
+            <PropertyRef Name="loaiCTID" />
+          </Key>
+          <Property Name="loaiCTID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tenloaiCT" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="QLCongTrinh">
+          <Key>
+            <PropertyRef Name="IDCT" />
+          </Key>
+          <Property Name="IDCT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenCT" Type="nvarchar" MaxLength="100" />
+          <Property Name="LoaiCT" Type="int" />
+          <Property Name="IDTinh" Type="int" />
+          <Property Name="IDHuyen" Type="int" />
+          <Property Name="IDXa" Type="int" />
+          <Property Name="LoaiHinh" Type="nvarchar" MaxLength="50" />
+          <Property Name="CSHDTK" Type="int" />
+          <Property Name="CSHDTT" Type="int" />
+          <Property Name="LoaihinhQL" Type="nvarchar" MaxLength="50" />
+          <Property Name="HoNgheo" Type="int" />
+          <Property Name="NamXayDung" Type="int" />
+          <Property Name="NamDuaVaoSD" Type="int" />
+        </EntityType>
+        <EntityType Name="QLHuyen">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDTinh" Type="int" />
+          <Property Name="TenHuyen" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="QLTinh">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenTinh" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="QLXa">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDHuyen" Type="int" />
+          <Property Name="TenXa" Type="nvarchar" MaxLength="50" />
+          <Property Name="IDTinh" Type="int" />
+        </EntityType>
+        <Association Name="FK_DanhGia_DataHuyen">
+          <End Role="DataHuyen" Type="Self.DataHuyen" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DanhGia" Type="Self.DanhGia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DataHuyen">
+              <PropertyRef Name="dthID" />
+            </Principal>
+            <Dependent Role="DanhGia">
+              <PropertyRef Name="dthID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DanhGia_QLCongTrinh">
+          <End Role="QLCongTrinh" Type="Self.QLCongTrinh" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DanhGia" Type="Self.DanhGia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QLCongTrinh">
+              <PropertyRef Name="IDCT" />
+            </Principal>
+            <Dependent Role="DanhGia">
+              <PropertyRef Name="IDCT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataHuyen_QLHuyen">
+          <End Role="QLHuyen" Type="Self.QLHuyen" Multiplicity="0..1" />
+          <End Role="DataHuyen" Type="Self.DataHuyen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QLHuyen">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DataHuyen">
+              <PropertyRef Name="IDHuyen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataHuyen_QLTinh">
+          <End Role="QLTinh" Type="Self.QLTinh" Multiplicity="0..1" />
+          <End Role="DataHuyen" Type="Self.DataHuyen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QLTinh">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DataHuyen">
+              <PropertyRef Name="IDTinh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QLCongTrinh_LoaiCongTrinh">
+          <End Role="LoaiCongTrinh" Type="Self.LoaiCongTrinh" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="QLCongTrinh" Type="Self.QLCongTrinh" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoaiCongTrinh">
+              <PropertyRef Name="loaiCTID" />
+            </Principal>
+            <Dependent Role="QLCongTrinh">
+              <PropertyRef Name="LoaiCT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QLCongTrinh_QLHuyen">
+          <End Role="QLHuyen" Type="Self.QLHuyen" Multiplicity="0..1" />
+          <End Role="QLCongTrinh" Type="Self.QLCongTrinh" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QLHuyen">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QLCongTrinh">
+              <PropertyRef Name="IDHuyen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QLCongTrinh_QLTinh">
+          <End Role="QLTinh" Type="Self.QLTinh" Multiplicity="0..1" />
+          <End Role="QLCongTrinh" Type="Self.QLCongTrinh" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QLTinh">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QLCongTrinh">
+              <PropertyRef Name="IDTinh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QLCongTrinh_QLXa">
+          <End Role="QLXa" Type="Self.QLXa" Multiplicity="0..1" />
+          <End Role="QLCongTrinh" Type="Self.QLCongTrinh" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QLXa">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QLCongTrinh">
+              <PropertyRef Name="IDXa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QLHuyen_QLTinh">
+          <End Role="QLTinh" Type="Self.QLTinh" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="QLHuyen" Type="Self.QLHuyen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QLTinh">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QLHuyen">
+              <PropertyRef Name="IDTinh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QLXa_QLHuyen">
+          <End Role="QLHuyen" Type="Self.QLHuyen" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="QLXa" Type="Self.QLXa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QLHuyen">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QLXa">
+              <PropertyRef Name="IDHuyen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QLXa_QLTinh">
+          <End Role="QLTinh" Type="Self.QLTinh" Multiplicity="0..1" />
+          <End Role="QLXa" Type="Self.QLXa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QLTinh">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QLXa">
+              <PropertyRef Name="IDTinh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QLCNModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DanhGia" EntityType="Self.DanhGia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DataHuyen" EntityType="Self.DataHuyen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoaiCongTrinh" EntityType="Self.LoaiCongTrinh" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QLCongTrinh" EntityType="Self.QLCongTrinh" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QLHuyen" EntityType="Self.QLHuyen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QLTinh" EntityType="Self.QLTinh" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QLXa" EntityType="Self.QLXa" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DanhGia_DataHuyen" Association="Self.FK_DanhGia_DataHuyen">
+            <End Role="DataHuyen" EntitySet="DataHuyen" />
+            <End Role="DanhGia" EntitySet="DanhGia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DanhGia_QLCongTrinh" Association="Self.FK_DanhGia_QLCongTrinh">
+            <End Role="QLCongTrinh" EntitySet="QLCongTrinh" />
+            <End Role="DanhGia" EntitySet="DanhGia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataHuyen_QLHuyen" Association="Self.FK_DataHuyen_QLHuyen">
+            <End Role="QLHuyen" EntitySet="QLHuyen" />
+            <End Role="DataHuyen" EntitySet="DataHuyen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataHuyen_QLTinh" Association="Self.FK_DataHuyen_QLTinh">
+            <End Role="QLTinh" EntitySet="QLTinh" />
+            <End Role="DataHuyen" EntitySet="DataHuyen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QLCongTrinh_LoaiCongTrinh" Association="Self.FK_QLCongTrinh_LoaiCongTrinh">
+            <End Role="LoaiCongTrinh" EntitySet="LoaiCongTrinh" />
+            <End Role="QLCongTrinh" EntitySet="QLCongTrinh" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QLCongTrinh_QLHuyen" Association="Self.FK_QLCongTrinh_QLHuyen">
+            <End Role="QLHuyen" EntitySet="QLHuyen" />
+            <End Role="QLCongTrinh" EntitySet="QLCongTrinh" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QLCongTrinh_QLTinh" Association="Self.FK_QLCongTrinh_QLTinh">
+            <End Role="QLTinh" EntitySet="QLTinh" />
+            <End Role="QLCongTrinh" EntitySet="QLCongTrinh" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QLCongTrinh_QLXa" Association="Self.FK_QLCongTrinh_QLXa">
+            <End Role="QLXa" EntitySet="QLXa" />
+            <End Role="QLCongTrinh" EntitySet="QLCongTrinh" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QLHuyen_QLTinh" Association="Self.FK_QLHuyen_QLTinh">
+            <End Role="QLTinh" EntitySet="QLTinh" />
+            <End Role="QLHuyen" EntitySet="QLHuyen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QLXa_QLHuyen" Association="Self.FK_QLXa_QLHuyen">
+            <End Role="QLHuyen" EntitySet="QLHuyen" />
+            <End Role="QLXa" EntitySet="QLXa" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QLXa_QLTinh" Association="Self.FK_QLXa_QLTinh">
+            <End Role="QLTinh" EntitySet="QLTinh" />
+            <End Role="QLXa" EntitySet="QLXa" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QLCNModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="QLCNEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="QLCNModel.Account" />
+          <EntitySet Name="DataHuyens" EntityType="QLCNModel.DataHuyen" />
+          <EntitySet Name="LoaiCongTrinhs" EntityType="QLCNModel.LoaiCongTrinh" />
+          <EntitySet Name="QLHuyens" EntityType="QLCNModel.QLHuyen" />
+          <EntitySet Name="QLTinhs" EntityType="QLCNModel.QLTinh" />
+          <EntitySet Name="QLXas" EntityType="QLCNModel.QLXa" />
+          <AssociationSet Name="FK_DataHuyen_QLHuyen" Association="QLCNModel.FK_DataHuyen_QLHuyen">
+            <End Role="QLHuyen" EntitySet="QLHuyens" />
+            <End Role="DataHuyen" EntitySet="DataHuyens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataHuyen_QLTinh" Association="QLCNModel.FK_DataHuyen_QLTinh">
+            <End Role="QLTinh" EntitySet="QLTinhs" />
+            <End Role="DataHuyen" EntitySet="DataHuyens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QLHuyen_QLTinh" Association="QLCNModel.FK_QLHuyen_QLTinh">
+            <End Role="QLTinh" EntitySet="QLTinhs" />
+            <End Role="QLHuyen" EntitySet="QLHuyens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QLXa_QLHuyen" Association="QLCNModel.FK_QLXa_QLHuyen">
+            <End Role="QLHuyen" EntitySet="QLHuyens" />
+            <End Role="QLXa" EntitySet="QLXas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QLXa_QLTinh" Association="QLCNModel.FK_QLXa_QLTinh">
+            <End Role="QLTinh" EntitySet="QLTinhs" />
+            <End Role="QLXa" EntitySet="QLXas" />
+          </AssociationSet>
+          <EntitySet Name="DanhGias" EntityType="QLCNModel.DanhGia" />
+          <AssociationSet Name="FK_DanhGia_DataHuyen" Association="QLCNModel.FK_DanhGia_DataHuyen">
+            <End Role="DataHuyen" EntitySet="DataHuyens" />
+            <End Role="DanhGia" EntitySet="DanhGias" />
+          </AssociationSet>
+          <EntitySet Name="QLCongTrinhs" EntityType="QLCNModel.QLCongTrinh" />
+          <AssociationSet Name="FK_DanhGia_QLCongTrinh" Association="QLCNModel.FK_DanhGia_QLCongTrinh">
+            <End Role="QLCongTrinh" EntitySet="QLCongTrinhs" />
+            <End Role="DanhGia" EntitySet="DanhGias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QLCongTrinh_LoaiCongTrinh" Association="QLCNModel.FK_QLCongTrinh_LoaiCongTrinh">
+            <End Role="LoaiCongTrinh" EntitySet="LoaiCongTrinhs" />
+            <End Role="QLCongTrinh" EntitySet="QLCongTrinhs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QLCongTrinh_QLHuyen" Association="QLCNModel.FK_QLCongTrinh_QLHuyen">
+            <End Role="QLHuyen" EntitySet="QLHuyens" />
+            <End Role="QLCongTrinh" EntitySet="QLCongTrinhs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QLCongTrinh_QLTinh" Association="QLCNModel.FK_QLCongTrinh_QLTinh">
+            <End Role="QLTinh" EntitySet="QLTinhs" />
+            <End Role="QLCongTrinh" EntitySet="QLCongTrinhs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QLCongTrinh_QLXa" Association="QLCNModel.FK_QLCongTrinh_QLXa">
+            <End Role="QLXa" EntitySet="QLXas" />
+            <End Role="QLCongTrinh" EntitySet="QLCongTrinhs" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="idAcc" />
+          </Key>
+          <Property Name="idAcc" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TenNguoiDung" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="DataHuyen">
+          <Key>
+            <PropertyRef Name="dthID" />
+          </Key>
+          <Property Name="dthID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDHuyen" Type="Int32" />
+          <Property Name="NamDanhGia" Type="Int32" />
+          <Property Name="SoHoDan" Type="Int32" />
+          <Property Name="SoHoNgheo" Type="Int32" />
+          <Property Name="IDTinh" Type="Int32" />
+          <NavigationProperty Name="QLHuyen" Relationship="QLCNModel.FK_DataHuyen_QLHuyen" FromRole="DataHuyen" ToRole="QLHuyen" />
+          <NavigationProperty Name="QLTinh" Relationship="QLCNModel.FK_DataHuyen_QLTinh" FromRole="DataHuyen" ToRole="QLTinh" />
+          <NavigationProperty Name="DanhGias" Relationship="QLCNModel.FK_DanhGia_DataHuyen" FromRole="DataHuyen" ToRole="DanhGia" />
+        </EntityType>
+        <EntityType Name="LoaiCongTrinh">
+          <Key>
+            <PropertyRef Name="loaiCTID" />
+          </Key>
+          <Property Name="loaiCTID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tenloaiCT" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="QLCongTrinhs" Relationship="QLCNModel.FK_QLCongTrinh_LoaiCongTrinh" FromRole="LoaiCongTrinh" ToRole="QLCongTrinh" />
+        </EntityType>
+        <EntityType Name="QLHuyen">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDTinh" Type="Int32" />
+          <Property Name="TenHuyen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DataHuyens" Relationship="QLCNModel.FK_DataHuyen_QLHuyen" FromRole="QLHuyen" ToRole="DataHuyen" />
+          <NavigationProperty Name="QLTinh" Relationship="QLCNModel.FK_QLHuyen_QLTinh" FromRole="QLHuyen" ToRole="QLTinh" />
+          <NavigationProperty Name="QLXas" Relationship="QLCNModel.FK_QLXa_QLHuyen" FromRole="QLHuyen" ToRole="QLXa" />
+          <NavigationProperty Name="QLCongTrinhs" Relationship="QLCNModel.FK_QLCongTrinh_QLHuyen" FromRole="QLHuyen" ToRole="QLCongTrinh" />
+        </EntityType>
+        <EntityType Name="QLTinh">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenTinh" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DataHuyens" Relationship="QLCNModel.FK_DataHuyen_QLTinh" FromRole="QLTinh" ToRole="DataHuyen" />
+          <NavigationProperty Name="QLHuyens" Relationship="QLCNModel.FK_QLHuyen_QLTinh" FromRole="QLTinh" ToRole="QLHuyen" />
+          <NavigationProperty Name="QLXas" Relationship="QLCNModel.FK_QLXa_QLTinh" FromRole="QLTinh" ToRole="QLXa" />
+          <NavigationProperty Name="QLCongTrinhs" Relationship="QLCNModel.FK_QLCongTrinh_QLTinh" FromRole="QLTinh" ToRole="QLCongTrinh" />
+        </EntityType>
+        <EntityType Name="QLXa">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDHuyen" Type="Int32" />
+          <Property Name="TenXa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IDTinh" Type="Int32" />
+          <NavigationProperty Name="QLHuyen" Relationship="QLCNModel.FK_QLXa_QLHuyen" FromRole="QLXa" ToRole="QLHuyen" />
+          <NavigationProperty Name="QLTinh" Relationship="QLCNModel.FK_QLXa_QLTinh" FromRole="QLXa" ToRole="QLTinh" />
+          <NavigationProperty Name="QLCongTrinhs" Relationship="QLCNModel.FK_QLCongTrinh_QLXa" FromRole="QLXa" ToRole="QLCongTrinh" />
+        </EntityType>
+        <Association Name="FK_DataHuyen_QLHuyen">
+          <End Type="QLCNModel.QLHuyen" Role="QLHuyen" Multiplicity="0..1" />
+          <End Type="QLCNModel.DataHuyen" Role="DataHuyen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QLHuyen">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DataHuyen">
+              <PropertyRef Name="IDHuyen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataHuyen_QLTinh">
+          <End Type="QLCNModel.QLTinh" Role="QLTinh" Multiplicity="0..1" />
+          <End Type="QLCNModel.DataHuyen" Role="DataHuyen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QLTinh">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DataHuyen">
+              <PropertyRef Name="IDTinh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QLHuyen_QLTinh">
+          <End Type="QLCNModel.QLTinh" Role="QLTinh" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="QLCNModel.QLHuyen" Role="QLHuyen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QLTinh">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QLHuyen">
+              <PropertyRef Name="IDTinh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QLXa_QLHuyen">
+          <End Type="QLCNModel.QLHuyen" Role="QLHuyen" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="QLCNModel.QLXa" Role="QLXa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QLHuyen">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QLXa">
+              <PropertyRef Name="IDHuyen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QLXa_QLTinh">
+          <End Type="QLCNModel.QLTinh" Role="QLTinh" Multiplicity="0..1" />
+          <End Type="QLCNModel.QLXa" Role="QLXa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QLTinh">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QLXa">
+              <PropertyRef Name="IDTinh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DanhGia">
+          <Key>
+            <PropertyRef Name="danhgiaID" />
+          </Key>
+          <Property Name="danhgiaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dthID" Type="Int32" />
+          <Property Name="IDCT" Type="Int32" />
+          <Property Name="HoDan" Type="Int32" />
+          <Property Name="HoNgheo" Type="Int32" />
+          <Property Name="LoaihinhQL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ThuphiDV" Type="Boolean" Nullable="false" />
+          <Property Name="DatQCVN" Type="Boolean" Nullable="false" />
+          <Property Name="KhaNangCapNuoc" Type="Boolean" Nullable="false" />
+          <Property Name="TyLeDauNoi" Type="Boolean" Nullable="false" />
+          <Property Name="CanboQL" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="DataHuyen" Relationship="QLCNModel.FK_DanhGia_DataHuyen" FromRole="DanhGia" ToRole="DataHuyen" />
+          <NavigationProperty Name="QLCongTrinh" Relationship="QLCNModel.FK_DanhGia_QLCongTrinh" FromRole="DanhGia" ToRole="QLCongTrinh" />
+        </EntityType>
+        <Association Name="FK_DanhGia_DataHuyen">
+          <End Type="QLCNModel.DataHuyen" Role="DataHuyen" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="QLCNModel.DanhGia" Role="DanhGia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DataHuyen">
+              <PropertyRef Name="dthID" />
+            </Principal>
+            <Dependent Role="DanhGia">
+              <PropertyRef Name="dthID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="QLCongTrinh">
+          <Key>
+            <PropertyRef Name="IDCT" />
+          </Key>
+          <Property Name="IDCT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenCT" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LoaiCT" Type="Int32" />
+          <Property Name="IDTinh" Type="Int32" />
+          <Property Name="IDHuyen" Type="Int32" />
+          <Property Name="IDXa" Type="Int32" />
+          <Property Name="LoaiHinh" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CSHDTK" Type="Int32" />
+          <Property Name="CSHDTT" Type="Int32" />
+          <Property Name="LoaihinhQL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HoNgheo" Type="Int32" />
+          <Property Name="NamXayDung" Type="Int32" />
+          <Property Name="NamDuaVaoSD" Type="Int32" />
+          <NavigationProperty Name="DanhGias" Relationship="QLCNModel.FK_DanhGia_QLCongTrinh" FromRole="QLCongTrinh" ToRole="DanhGia" />
+          <NavigationProperty Name="LoaiCongTrinh" Relationship="QLCNModel.FK_QLCongTrinh_LoaiCongTrinh" FromRole="QLCongTrinh" ToRole="LoaiCongTrinh" />
+          <NavigationProperty Name="QLHuyen" Relationship="QLCNModel.FK_QLCongTrinh_QLHuyen" FromRole="QLCongTrinh" ToRole="QLHuyen" />
+          <NavigationProperty Name="QLTinh" Relationship="QLCNModel.FK_QLCongTrinh_QLTinh" FromRole="QLCongTrinh" ToRole="QLTinh" />
+          <NavigationProperty Name="QLXa" Relationship="QLCNModel.FK_QLCongTrinh_QLXa" FromRole="QLCongTrinh" ToRole="QLXa" />
+        </EntityType>
+        <Association Name="FK_DanhGia_QLCongTrinh">
+          <End Type="QLCNModel.QLCongTrinh" Role="QLCongTrinh" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="QLCNModel.DanhGia" Role="DanhGia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QLCongTrinh">
+              <PropertyRef Name="IDCT" />
+            </Principal>
+            <Dependent Role="DanhGia">
+              <PropertyRef Name="IDCT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QLCongTrinh_LoaiCongTrinh">
+          <End Type="QLCNModel.LoaiCongTrinh" Role="LoaiCongTrinh" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="QLCNModel.QLCongTrinh" Role="QLCongTrinh" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoaiCongTrinh">
+              <PropertyRef Name="loaiCTID" />
+            </Principal>
+            <Dependent Role="QLCongTrinh">
+              <PropertyRef Name="LoaiCT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QLCongTrinh_QLHuyen">
+          <End Type="QLCNModel.QLHuyen" Role="QLHuyen" Multiplicity="0..1" />
+          <End Type="QLCNModel.QLCongTrinh" Role="QLCongTrinh" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QLHuyen">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QLCongTrinh">
+              <PropertyRef Name="IDHuyen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QLCongTrinh_QLTinh">
+          <End Type="QLCNModel.QLTinh" Role="QLTinh" Multiplicity="0..1" />
+          <End Type="QLCNModel.QLCongTrinh" Role="QLCongTrinh" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QLTinh">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QLCongTrinh">
+              <PropertyRef Name="IDTinh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QLCongTrinh_QLXa">
+          <End Type="QLCNModel.QLXa" Role="QLXa" Multiplicity="0..1" />
+          <End Type="QLCNModel.QLCongTrinh" Role="QLCongTrinh" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QLXa">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QLCongTrinh">
+              <PropertyRef Name="IDXa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QLCNModelStoreContainer" CdmEntityContainer="QLCNEntities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="QLCNModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="TenNguoiDung" ColumnName="TenNguoiDung" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="idAcc" ColumnName="idAcc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DataHuyens">
+            <EntityTypeMapping TypeName="QLCNModel.DataHuyen">
+              <MappingFragment StoreEntitySet="DataHuyen">
+                <ScalarProperty Name="IDTinh" ColumnName="IDTinh" />
+                <ScalarProperty Name="SoHoNgheo" ColumnName="SoHoNgheo" />
+                <ScalarProperty Name="SoHoDan" ColumnName="SoHoDan" />
+                <ScalarProperty Name="NamDanhGia" ColumnName="NamDanhGia" />
+                <ScalarProperty Name="IDHuyen" ColumnName="IDHuyen" />
+                <ScalarProperty Name="dthID" ColumnName="dthID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoaiCongTrinhs">
+            <EntityTypeMapping TypeName="QLCNModel.LoaiCongTrinh">
+              <MappingFragment StoreEntitySet="LoaiCongTrinh">
+                <ScalarProperty Name="tenloaiCT" ColumnName="tenloaiCT" />
+                <ScalarProperty Name="loaiCTID" ColumnName="loaiCTID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QLHuyens">
+            <EntityTypeMapping TypeName="QLCNModel.QLHuyen">
+              <MappingFragment StoreEntitySet="QLHuyen">
+                <ScalarProperty Name="TenHuyen" ColumnName="TenHuyen" />
+                <ScalarProperty Name="IDTinh" ColumnName="IDTinh" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QLTinhs">
+            <EntityTypeMapping TypeName="QLCNModel.QLTinh">
+              <MappingFragment StoreEntitySet="QLTinh">
+                <ScalarProperty Name="TenTinh" ColumnName="TenTinh" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QLXas">
+            <EntityTypeMapping TypeName="QLCNModel.QLXa">
+              <MappingFragment StoreEntitySet="QLXa">
+                <ScalarProperty Name="IDTinh" ColumnName="IDTinh" />
+                <ScalarProperty Name="TenXa" ColumnName="TenXa" />
+                <ScalarProperty Name="IDHuyen" ColumnName="IDHuyen" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DanhGias">
+            <EntityTypeMapping TypeName="QLCNModel.DanhGia">
+              <MappingFragment StoreEntitySet="DanhGia">
+                <ScalarProperty Name="CanboQL" ColumnName="CanboQL" />
+                <ScalarProperty Name="TyLeDauNoi" ColumnName="TyLeDauNoi" />
+                <ScalarProperty Name="KhaNangCapNuoc" ColumnName="KhaNangCapNuoc" />
+                <ScalarProperty Name="DatQCVN" ColumnName="DatQCVN" />
+                <ScalarProperty Name="ThuphiDV" ColumnName="ThuphiDV" />
+                <ScalarProperty Name="LoaihinhQL" ColumnName="LoaihinhQL" />
+                <ScalarProperty Name="HoNgheo" ColumnName="HoNgheo" />
+                <ScalarProperty Name="HoDan" ColumnName="HoDan" />
+                <ScalarProperty Name="IDCT" ColumnName="IDCT" />
+                <ScalarProperty Name="dthID" ColumnName="dthID" />
+                <ScalarProperty Name="danhgiaID" ColumnName="danhgiaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QLCongTrinhs">
+            <EntityTypeMapping TypeName="QLCNModel.QLCongTrinh">
+              <MappingFragment StoreEntitySet="QLCongTrinh">
+                <ScalarProperty Name="NamDuaVaoSD" ColumnName="NamDuaVaoSD" />
+                <ScalarProperty Name="NamXayDung" ColumnName="NamXayDung" />
+                <ScalarProperty Name="HoNgheo" ColumnName="HoNgheo" />
+                <ScalarProperty Name="LoaihinhQL" ColumnName="LoaihinhQL" />
+                <ScalarProperty Name="CSHDTT" ColumnName="CSHDTT" />
+                <ScalarProperty Name="CSHDTK" ColumnName="CSHDTK" />
+                <ScalarProperty Name="LoaiHinh" ColumnName="LoaiHinh" />
+                <ScalarProperty Name="IDXa" ColumnName="IDXa" />
+                <ScalarProperty Name="IDHuyen" ColumnName="IDHuyen" />
+                <ScalarProperty Name="IDTinh" ColumnName="IDTinh" />
+                <ScalarProperty Name="LoaiCT" ColumnName="LoaiCT" />
+                <ScalarProperty Name="TenCT" ColumnName="TenCT" />
+                <ScalarProperty Name="IDCT" ColumnName="IDCT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

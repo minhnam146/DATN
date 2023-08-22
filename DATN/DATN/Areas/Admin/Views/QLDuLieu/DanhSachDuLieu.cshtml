@@ -1,0 +1,49 @@
+﻿@model IEnumerable<DATN.Models.DataHuyen>
+
+@{
+    ViewBag.Title = "DanhSachDuLieu";
+    Layout = "~/Areas/Admin/Views/Shared/layout-admin.cshtml";
+}
+
+<h2>DanhSachDuLieu</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateDuLieu")
+</p>
+
+<table class="table">
+    <tr>
+        <th> Tỉnh</th>
+        <th> Huyện</th>
+        <th> Năm</th>
+        <th> Số hộ dân</th>
+        <th> Số hộ nghèo</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.QLTinh.TenTinh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QLHuyen.TenHuyen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NamDanhGia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoHoDan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoHoNgheo)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditDuLieu", new { id = item.dthID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.dthID }) |
+                @Html.ActionLink("Delete", "DeleteDuLieu", new { id = item.dthID })
+            </td>
+        </tr>
+    }
+</table>

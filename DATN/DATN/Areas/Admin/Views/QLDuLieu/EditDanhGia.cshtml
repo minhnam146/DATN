@@ -1,0 +1,110 @@
+﻿@model DATN.Models.DanhGia
+
+@{
+    ViewBag.Title = "EditDanhGia";
+    Layout = "~/Areas/Admin/Views/Shared/layout-admin.cshtml";
+}
+
+<h2>Edit Đánh Giá</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.danhgiaID)
+
+    <dl class="dl-horizontal">
+        <dt> Huyện:</dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataHuyen.QLHuyen.TenHuyen)
+        </dd>
+        <dt> Năm Đánh Giá:</dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataHuyen.NamDanhGia)
+        </dd>
+        <dt> Công trình:</dt>
+        <dd>
+            @Html.DisplayFor(model => model.QLCongTrinh.TenCT)
+        </dd>
+        <dt> Địa bàn cấp nước:</dt>
+        <dd>
+            @Html.DisplayFor(model => model.QLCongTrinh.QLXa.TenXa)
+        </dd>
+        <dd>
+            <input name="dthID" id="dthID" type="hidden" value="@ViewBag.dataID" readonly/>
+        </dd>
+    </dl>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.HoDan, "Số hộ dân:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.HoDan, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.HoDan, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.HoNgheo, "Số hộ nghèo:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.HoNgheo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.HoNgheo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.LoaihinhQL, "Loại hình quản lý:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.LoaihinhQL, ViewBag.dsloaihinhQL as SelectList, "--- Loại hình quản lý ---", new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ThuphiDV, "Thu phí dịch vụ:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.ThuphiDV, ViewBag.dsyesNo as SelectList, "--- Thu phí dịch vụ ---", new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DatQCVN, "Đạt QCVN:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.DatQCVN, ViewBag.dsyesNo as SelectList, "--- Đạt QCVN ---", new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.KhaNangCapNuoc, "Khả năng cấp nước:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.KhaNangCapNuoc, ViewBag.dsyesNo as SelectList, "--- Khả năng cấp nước ---", new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TyLeDauNoi, "Tỷ lệ đấu nối:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.TyLeDauNoi, ViewBag.dsyesNo as SelectList, "--- Tỷ lệ đấu nối ---", new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CanboQL, "Cán bộ quản lý:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.CanboQL, ViewBag.dsyesNo as SelectList, "--- Cán bộ quản lý ---", new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<p>
+    @*@Html.ActionLink("Create New", "CreateDanhGia")*@
+    <a href="/Admin/QLDuLieu/Test1?dataID=@ViewBag.dataID">Back</a>
+</p>

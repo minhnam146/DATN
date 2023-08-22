@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="QLCNModelStoreContainer" CdmEntityContainer="QLCNEntities">
+    <EntitySetMapping Name="Accounts">
+      <EntityTypeMapping TypeName="QLCNModel.Account">
+        <MappingFragment StoreEntitySet="Account">
+          <ScalarProperty Name="TenNguoiDung" ColumnName="TenNguoiDung" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="idAcc" ColumnName="idAcc" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DataHuyens">
+      <EntityTypeMapping TypeName="QLCNModel.DataHuyen">
+        <MappingFragment StoreEntitySet="DataHuyen">
+          <ScalarProperty Name="IDTinh" ColumnName="IDTinh" />
+          <ScalarProperty Name="SoHoNgheo" ColumnName="SoHoNgheo" />
+          <ScalarProperty Name="SoHoDan" ColumnName="SoHoDan" />
+          <ScalarProperty Name="NamDanhGia" ColumnName="NamDanhGia" />
+          <ScalarProperty Name="IDHuyen" ColumnName="IDHuyen" />
+          <ScalarProperty Name="dthID" ColumnName="dthID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoaiCongTrinhs">
+      <EntityTypeMapping TypeName="QLCNModel.LoaiCongTrinh">
+        <MappingFragment StoreEntitySet="LoaiCongTrinh">
+          <ScalarProperty Name="tenloaiCT" ColumnName="tenloaiCT" />
+          <ScalarProperty Name="loaiCTID" ColumnName="loaiCTID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QLHuyens">
+      <EntityTypeMapping TypeName="QLCNModel.QLHuyen">
+        <MappingFragment StoreEntitySet="QLHuyen">
+          <ScalarProperty Name="TenHuyen" ColumnName="TenHuyen" />
+          <ScalarProperty Name="IDTinh" ColumnName="IDTinh" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QLTinhs">
+      <EntityTypeMapping TypeName="QLCNModel.QLTinh">
+        <MappingFragment StoreEntitySet="QLTinh">
+          <ScalarProperty Name="TenTinh" ColumnName="TenTinh" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QLXas">
+      <EntityTypeMapping TypeName="QLCNModel.QLXa">
+        <MappingFragment StoreEntitySet="QLXa">
+          <ScalarProperty Name="IDTinh" ColumnName="IDTinh" />
+          <ScalarProperty Name="TenXa" ColumnName="TenXa" />
+          <ScalarProperty Name="IDHuyen" ColumnName="IDHuyen" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DanhGias">
+      <EntityTypeMapping TypeName="QLCNModel.DanhGia">
+        <MappingFragment StoreEntitySet="DanhGia">
+          <ScalarProperty Name="CanboQL" ColumnName="CanboQL" />
+          <ScalarProperty Name="TyLeDauNoi" ColumnName="TyLeDauNoi" />
+          <ScalarProperty Name="KhaNangCapNuoc" ColumnName="KhaNangCapNuoc" />
+          <ScalarProperty Name="DatQCVN" ColumnName="DatQCVN" />
+          <ScalarProperty Name="ThuphiDV" ColumnName="ThuphiDV" />
+          <ScalarProperty Name="LoaihinhQL" ColumnName="LoaihinhQL" />
+          <ScalarProperty Name="HoNgheo" ColumnName="HoNgheo" />
+          <ScalarProperty Name="HoDan" ColumnName="HoDan" />
+          <ScalarProperty Name="IDCT" ColumnName="IDCT" />
+          <ScalarProperty Name="dthID" ColumnName="dthID" />
+          <ScalarProperty Name="danhgiaID" ColumnName="danhgiaID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QLCongTrinhs">
+      <EntityTypeMapping TypeName="QLCNModel.QLCongTrinh">
+        <MappingFragment StoreEntitySet="QLCongTrinh">
+          <ScalarProperty Name="NamDuaVaoSD" ColumnName="NamDuaVaoSD" />
+          <ScalarProperty Name="NamXayDung" ColumnName="NamXayDung" />
+          <ScalarProperty Name="HoNgheo" ColumnName="HoNgheo" />
+          <ScalarProperty Name="LoaihinhQL" ColumnName="LoaihinhQL" />
+          <ScalarProperty Name="CSHDTT" ColumnName="CSHDTT" />
+          <ScalarProperty Name="CSHDTK" ColumnName="CSHDTK" />
+          <ScalarProperty Name="LoaiHinh" ColumnName="LoaiHinh" />
+          <ScalarProperty Name="IDXa" ColumnName="IDXa" />
+          <ScalarProperty Name="IDHuyen" ColumnName="IDHuyen" />
+          <ScalarProperty Name="IDTinh" ColumnName="IDTinh" />
+          <ScalarProperty Name="LoaiCT" ColumnName="LoaiCT" />
+          <ScalarProperty Name="TenCT" ColumnName="TenCT" />
+          <ScalarProperty Name="IDCT" ColumnName="IDCT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

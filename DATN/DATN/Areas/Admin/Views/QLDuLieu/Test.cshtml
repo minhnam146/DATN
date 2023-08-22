@@ -1,0 +1,163 @@
+﻿@model DATN.Models.DataHuyen
+
+@{
+    ViewBag.Title = "Test";
+    Layout = "~/Areas/Admin/Views/Shared/layout-admin.cshtml";
+    var db = new DATN.Models.QLCNEntities();
+    var dsdataHuyen = (from item in db.DataHuyens
+                       select item).ToList();
+    var dsYear = db.DataHuyens.ToList();
+    var dsYear1 = (from item in db.DataHuyens
+                   select new
+                   {
+                       item.NamDanhGia
+                   }).Distinct().ToList();
+}
+
+<h2>Dữ Liệu Quận/Huyện</h2>
+<p>
+    @Html.ActionLink("Create New", "CreateDuLieu")
+</p>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.IDTinh, "Tỉnh:", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @if (ViewBag.dsTinh != null)
+        {
+            @Html.DropDownListFor(model => model.IDTinh, ViewBag.dsTinh as SelectList, "--- Chọn Tỉnh ---", new { @class = "form-control" })
+        }
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.IDHuyen, "Huyện:", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.IDHuyen, new SelectList(" "), "--- Chọn Huyện ---", new { @class = "form-control" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.NamDanhGia, "Năm:", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @if (ViewBag.dsnamDanhGia1 != null)
+        {
+            @Html.DropDownListFor(model => model.NamDanhGia, ViewBag.dsnamDanhGia1 as SelectList, "--- Chọn Năm ---", new { @class = "form-control" })
+        }
+    </div>
+</div>
+
+<table class="table" id="Test">
+    <thead>
+        <tr>
+            <th> STT</th>
+            <th> Tỉnh</th>
+            <th> Huyện</th>
+            <th> Năm</th>
+            <th> Số hộ dân</th>
+            <th> Số hộ nghèo</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    function Edit(dthID) {
+        var url = '@Url.Action("EditDuLieu", new {  id = "XXXX" })';
+        console.log(url);
+        url = url.replace('XXXX', dthID);
+        window.location.href = url;
+    }
+
+    function Detail(dthID) {
+        var url = '@Url.Action("Test1", new {  dataID = "XXXX" })';
+        console.log(url);
+        url = url.replace('XXXX', dthID);
+        window.location.href = url;
+    }
+
+    function Delete(dthID) {
+        var url = '@Url.Action("DeleteDuLieu", new {  id = "XXXX" })';
+        console.log(url);
+        url = url.replace('XXXX', dthID);
+        window.location.href = url;
+    }
+
+     $(document).ready(function () {
+         $("#IDTinh").change(function () {
+             $.get("/Admin/QLCongTrinh/GetHuyen", { tinhID: $("#IDTinh").val() }, function (dataHuyen) {
+                 $("#IDHuyen").empty();
+                 $("#Test tbody").empty();
+                 $("#NamDanhGia").empty();
+                 $("#IDHuyen").append("<option value='" + 0 + 'selected' + "'>" + "--- Chọn Huyện ---" + "</option>")
+                 $("#NamDanhGia").append("<option value='" + 0 + 'selected' + "'>" + "--- Chọn Năm ---" + "</option>")
+                 $.each(dataHuyen, function (index, row) {
+                     $("#IDHuyen").append("<option value='" + row.ID + "'>" + row.TenHuyen + "</option>")
+                 });
+             });
+            $.get("/Admin/QLDuLieu/GetDLHuyenTheoTinh", {tinhID: $("#IDTinh").val()}, function (data) {
+                    $("#Test tbody").empty();
+                    $.each(data, function (index, item) {
+                        var rows = "<tr>"
+                            + "<td>" + (++index) + "</td>"
+                            + "<td>" + item.TenTinh + "</td>"
+                            + "<td>" + item.TenHuyen + "</td>"
+                            + "<td>" + item.NamDanhGia + "</td>"
+                            + "<td>" + item.SoHoDan + "</td>"
+                            + "<td>" + item.SoHoNgheo + "</td>"
+                            + "<td>" + `<button style="margin-right:10px" onClick=Detail(${item.dthID})>Detail</button>` + `<button style="margin-right:10px" onClick=Edit(${item.dthID})>Edit</button>` + `<button onClick=Delete(${item.dthID})>Delete</button>` + "</td>"  
+                            + "</tr>";
+                        $('#Test tbody').append(rows);
+                    });
+            });
+         });
+     })
+    $(document).ready(function () {
+        $("#IDHuyen").change(function () {
+            $.get("/Admin/QLDuLieu/GetYear", { huyenID: $("#IDHuyen").val() }, function (dataYear) {
+                $("#NamDanhGia").empty();
+                $("#Test tbody").empty();
+                $("#NamDanhGia").append("<option value='" + 0 + 'selected' + "'>" + "--- Chọn Năm ---" + "</option>")
+                $.each(dataYear, function (index, row) {
+                    $("#NamDanhGia").append("<option value='" + row.NamDanhGia + "'>" + row.NamDanhGia + "</option>")
+                });
+            });
+            $.get("/Admin/QLDuLieu/GetDLHuyen", {huyenID: $("#IDHuyen").val()}, function (data) {
+                    $("#Test tbody").empty();
+                    $.each(data, function (index, item) {
+                        var rows = "<tr>"
+                            + "<td>" + (++index) + "</td>"
+                            + "<td>" + item.TenTinh + "</td>"
+                            + "<td>" + item.TenHuyen + "</td>"
+                            + "<td>" + item.NamDanhGia + "</td>"
+                            + "<td>" + item.SoHoDan + "</td>"
+                            + "<td>" + item.SoHoNgheo + "</td>"
+                            + "<td>" + `<button style="margin-right:10px" onClick=Detail(${item.dthID})>Detail</button>` + `<button style="margin-right:10px" onClick=Edit(${item.dthID})>Edit</button>` + `<button onClick=Delete(${item.dthID})>Delete</button>` + "</td>"                           
+                            + "</tr>";
+                        $('#Test tbody').append(rows);
+                    });
+            });
+         });
+     })
+       $(document).ready(function () {
+           $("#NamDanhGia").change(function () {
+           $.get("/Admin/QLDuLieu/GetDLHuyenTheoNam", {huyenID: $("#IDHuyen").val(), year: $("#NamDanhGia").val()}, function (data) {
+                    $("#Test tbody").empty();
+                    $.each(data, function (index, item) {
+                        var rows = "<tr>"
+                            + "<td>" + (++index) + "</td>"
+                            + "<td>" + item.TenTinh + "</td>"
+                            + "<td>" + item.TenHuyen + "</td>"
+                            + "<td>" + item.NamDanhGia + "</td>"
+                            + "<td>" + item.SoHoDan + "</td>"
+                            + "<td>" + item.SoHoNgheo + "</td>"
+                            + "<td>" + `<button style="margin-right:10px" onClick=Detail(${item.dthID})>Detail</button>` + `<button style="margin-right:10px" onClick=Edit(${item.dthID})>Edit</button>` + `<button onClick=Delete(${item.dthID})>Delete</button>` + "</td>"  
+                            + "</tr>";
+                        $('#Test tbody').append(rows);
+                    });
+            });
+            });
+        })
+</script>
